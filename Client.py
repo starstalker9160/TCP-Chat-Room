@@ -1,9 +1,13 @@
 import threading
 import socket
 
+ip_ = str(input("ip: ")).lower().strip()
+port_ = input('port: ')
+if port_.strip() == "":
+    port_ = 8080
 alias = input('Enter what you want to be seen as: ')
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('127.0.0.1', 59000))
+client.connect((ip_, port_))
 
 
 def client_receive():

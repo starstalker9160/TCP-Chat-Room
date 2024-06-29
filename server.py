@@ -1,8 +1,13 @@
 import threading
 import socket
 
-host = '127.0.0.1'
-port = 59000
+host = str(input("localhost?: "))
+
+if host.strip() == "":
+    host = '127.0.0.1'
+else:
+    host = host
+port = 8080
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
 server.listen()
@@ -39,13 +44,15 @@ def receive():
     while True:
         print(f'[SERVER STARTING] -> Server hosted on {host}:{port}\n\n')
         client, address = server.accept()
-        print(f'[NEW CONNECTION] -> Connection is established with {str(address)}')
+        print(
+            f'[NEW CONNECTION] -> Connection is established with {str(address)}')
         client.send('alias?'.encode('utf-8'))
         alias = client.recv(1024)
         usernames.append(alias)
         clients.append(client)
         print(f'    The username of this client is {alias}\n'.encode('utf-8'))
-        broadcast(f'\n{alias} has connected to the chat room\n'.encode('utf-8'))
+        broadcast(
+            f'\n{alias} has connected to the chat room\n'.encode('utf-8'))
         client.send('Successfully connected to chatroom!\n'.encode('utf-8'))
         thread = threading.Thread(target=handle_client, args=(client,))
         thread.start()
