@@ -1,13 +1,15 @@
 import threading
 import socket
 
-ip_ = str(input("ip: ")).lower().strip()
-port_ = input('port: ')
-if port_.strip() == "":
-    port_ = 8080
+_ip = input("ip (leave blank for localhost): ").strip()
+if _ip == "":
+    _ip = "127.0.0.1"
+_port = input("port (leave blank for 8080): ")
+if _port == "":
+    _port = 8080
 alias = input('Enter what you want to be seen as: ')
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((ip_, port_))
+client.connect((_ip, int(_port)))
 
 
 def client_receive():
@@ -19,7 +21,7 @@ def client_receive():
             else:
                 print(message)
         except:
-            print('Error!')
+            print('Error connecting to server')
             client.close()
             break
 
