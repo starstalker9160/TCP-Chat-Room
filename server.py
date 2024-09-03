@@ -1,4 +1,3 @@
-
 import threading
 import socket
 
@@ -19,9 +18,6 @@ def broadcast(message):
     for client in clients:
         client.send(message)
 
-# Function to handle clients'connections
-
-
 def handle_client(client):
     while True:
         try:
@@ -37,8 +33,6 @@ def handle_client(client):
             print(f"[CONNECTION CLOSED] -> {alias} has left the chat room!\n")
             usernames.remove(alias)
             break
-# Main function to receive the clients connection
-
 
 def receive():
     while True:
@@ -54,7 +48,6 @@ def receive():
         client.send('Successfully connected to chatroom!\n'.encode('utf-8'))
         thread = threading.Thread(target=handle_client, args=(client,))
         thread.start()
-
 
 if __name__ == "__main__":
     receive()
